@@ -1,22 +1,28 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'directors_database'
 
+
+#When encountering a new name, add that as key
+#The value will be all of profit they made from movie
+
 def directors_totals(nds)
-  # Remember, it's always OK to pretty print what you get *in* to make sure
-  # that you know what you're starting with!
-  #
-  #
-  # The Hash result be full of things like "Jean-Pierre Jeunet" => "222312123123"
-  result = {
-  }
-  #
-  # Use loops, variables and the accessing method, [], to loop through the NDS
-  # and total up all the
-  # ...
-  # ...
-  # ...
-  #
-  #
-  # Be sure to return the result at the end!
-  nil
+  db = directors_database
+  netTotalHash = {}
+  totalNumDirectors = db.length #This will count how many hashmaps are in our array, provided by database
+  n = 0
+  
+  while n < totalNumDirectors do
+    totalSum = 0 #We reset totalSum to 0 every time we get new director
+    i = 0 #We create another counter that resets to 0 so that we can iterate through every movie per director. 
+    currentDirector = db[n][:name]
+    
+    #The algorithm below allows to sum to be added while n (the current director) is constant... only the movie [i] will change here
+    while i < db[n][:movies].length do 
+      totalSum += db[n][:movies][i][:worldwide_gross]
+      i += 1
+    end
+    netTotalHash[currentDirector] = totalSum
+    n += 1 #onto the next director
+  end
+  return netTotalHash
 end
